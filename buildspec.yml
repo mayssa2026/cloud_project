@@ -12,7 +12,7 @@ phases:
           --stack-name your-stack-name \
           --query "Stacks[0].Outputs[?OutputKey=='ApiGatewayURL'].OutputValue" \
           --output text)
-      - echo "API Gateway URL is: $API_GATEWAY_URL"
+      - echo API Gateway URL is $API_GATEWAY_URL
       - export REACT_APP_API_URL=$API_GATEWAY_URL
   build:
     commands:
@@ -20,5 +20,5 @@ phases:
       - npm run build
 artifacts:
   files:
-    - '**/*'
+    - '*/'
   base-directory: build
