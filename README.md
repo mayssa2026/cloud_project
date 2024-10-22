@@ -29,7 +29,7 @@
 - Click **Create Stack** and select **With new resources (standard)**.
 - Upload the `cloud_formation_05.yml` file located in the `config_files/` directory.
 - You might be prompted to enter the following parameters:
-  - **GitHubOAuthToken**: [Reach out to Mayssa Elloumi @ melloumi@miu.edu]
+  - **GitHubOAuthToken**
   - **GitHubBranch**: [No modification required]
   - **FrontEndBucket**: [No modification required]
 
