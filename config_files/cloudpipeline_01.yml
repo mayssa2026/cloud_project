@@ -19,12 +19,7 @@ Parameters:
 
 
 Resources:
-  # S3 Bucket (already existing) for hosting the static website
-  # FrontEndBucket:
-  #   Type: 'AWS::S3::Bucket'
-  #   Properties:
-  #     BucketName: 'front-buckets3-01'
-
+  
   # Artifact Bucket for CodePipeline (temporary storage for build artifacts for the github project)
   ArtifactBucket:
     Type: 'AWS::S3::Bucket'

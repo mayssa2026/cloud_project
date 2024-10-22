@@ -10,12 +10,10 @@ def lambda_handler(event, context):
     print(f"Event: {event}")
     print(f"Event type: {event}")
     
-    # body = json.loads(event['body'])
-    # email = body['email']
-    # profile_image = body['profileImage']
+    body = json.loads(event['body'])
+    email = body['email']
+    profile_image = body['profileImage']
     
-    email = event['email']
-    profile_image = event['profileImage']
     print(f"Email: {email}")
     print(f"Profile Image: {profile_image}")
 
