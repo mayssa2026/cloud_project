@@ -25,7 +25,7 @@ Resources:
   #   Properties:
   #     BucketName: 'front-buckets3-01'
 
-  # Artifact Bucket for CodePipeline (temporary storage for build artifacts)
+  # Artifact Bucket for CodePipeline (temporary storage for build artifacts for the github project)
   ArtifactBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
@@ -77,7 +77,7 @@ Resources:
                   - 'logs:*'
                 Resource: '*'
 
-  # CodeBuild Project for building the React app
+  # CodeBuild Project for building the React app , that will contain the CI CD pipelines
   ReactBuildProject:
     Type: 'AWS::CodeBuild::Project'
     Properties:
@@ -88,7 +88,7 @@ Resources:
         Type: 'CODEPIPELINE'
       Environment:
         ComputeType: 'BUILD_GENERAL1_SMALL'
-        Image: 'aws/codebuild/standard:5.0'  # Standard Node.js environment for React builds
+        Image: 'aws/codebuild/standard:7.0'  # Standard Node.js environment for React builds
         Type: 'LINUX_CONTAINER'
         EnvironmentVariables:
           - Name: 'NODE_ENV'
@@ -121,7 +121,7 @@ Resources:
                 Branch: !Ref GitHubBranch
                 OAuthToken: !Ref GitHubOAuthToken    #after forking, put the token
               RunOrder: 1
-        - Name: Build
+        - Name: Build  #here it access the buildspec.yml 
           Actions:
             - Name: BuildAction
               ActionTypeId:

@@ -18,7 +18,7 @@ function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://kegu4iixsl.execute-api.us-east-1.amazonaws.com/dev/actions', {
+            const response = await axios.post('https://0gh1gn6av0.execute-api.us-east-1.amazonaws.com/dev/signin', {
                 email: formData.email,
                 password: formData.password,
             });

@@ -71,7 +71,7 @@ Resources:
           import boto3
           from botocore.exceptions import ClientError
           dynamodb = boto3.resource('dynamodb')
-          table = dynamodb.Table('UsersTable')
+          table = dynamodb.Table('finalproject-users')
 
           def lambda_handler(event, context):
               body = json.loads(event['body'])
@@ -153,7 +153,7 @@ Resources:
           s3_client = boto3.client('s3')
 
           # Create a DynamoDB table object
-          table = dynamodb.Table('UsersTable')
+          table = dynamodb.Table('finalproject-users')
 
           def lambda_handler(event, context):
               # Parse input data from the API Gateway event
@@ -338,7 +338,7 @@ Resources:
     Properties:
       AuthorizationType: 'NONE'
       HttpMethod: 'POST'
-      ResourceId: !Ref SignInResource
+      ResourceId: !Ref SignInResource 
       RestApiId: !Ref APIGatewayRestApi
       Integration:
         IntegrationHttpMethod: 'POST'
@@ -445,6 +445,94 @@ Resources:
             QueryString: 'false'
             Cookies:
               Forward: 'none'
+
+  #options for the cors problem
+  SignInOptionMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: OPTIONS
+      ResourceId: !Ref SignInResource
+      RestApiId: !Ref APIGatewayRestApi
+      AuthorizationType: NONE
+      Integration:
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        Type: MOCK
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+            method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+
+  SignUpOptionMethod:
+      Type: AWS::ApiGateway::Method
+      Properties:
+        HttpMethod: OPTIONS
+        ResourceId: !Ref SignUpResource
+        RestApiId: !Ref APIGatewayRestApi
+        AuthorizationType: NONE
+        Integration:
+          IntegrationResponses:
+            - StatusCode: 200
+              ResponseParameters:
+                method.response.header.Access-Control-Allow-Origin: "'*'"
+                method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+                method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+          RequestTemplates:
+            application/json: '{"statusCode": 200}'
+          Type: MOCK
+        MethodResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+  
+  UploadImageOptionMethod:
+      Type: AWS::ApiGateway::Method
+      Properties:
+        HttpMethod: OPTIONS
+        ResourceId: !Ref UploadImageResource
+        RestApiId: !Ref APIGatewayRestApi
+        AuthorizationType: NONE
+        Integration:
+          IntegrationResponses:
+            - StatusCode: 200
+              ResponseParameters:
+                method.response.header.Access-Control-Allow-Origin: "'*'"
+                method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+                method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+          RequestTemplates:
+            application/json: '{"statusCode": 200}'
+          Type: MOCK
+        MethodResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+
+  #to create stage 
+  ApiGatewayDeployment:
+      Type: AWS::ApiGateway::Deployment
+      Properties:
+        RestApiId: !Ref APIGatewayRestApi
+        StageName: dev
+      DependsOn:
+        - SignInMethod
+        - SignUpMethod
+        - UploadImageMethod
+        - SignInOptionMethod
+        - SignUpOptionMethod
+        - UploadImageOptionMethod
+        
 
 Outputs:
   ApiGatewayURL:
