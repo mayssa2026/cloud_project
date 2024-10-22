@@ -42,3 +42,5 @@
 ### 4. Get the Frontend CDN URL from CloudFormation output
 - Navigate to the **CloudFormation** stack outputs.
 - Look for the **CloudFrontURL** parameter which contains the CDN URL for your frontend.
+
+###5. find the screenshots of the demo attached in the pdf file
