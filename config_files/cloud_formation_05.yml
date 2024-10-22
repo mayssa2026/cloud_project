@@ -535,7 +535,7 @@ Resources:
 Outputs:
   ApiGatewayURL:
     Description: 'API Gateway URL'
-    Value: !Sub 'https://${APIGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod'
+    Value: !Sub 'https://${APIGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev'
 
   CloudFrontURL:
     Description: 'The CloudFront URL to access the static website'
