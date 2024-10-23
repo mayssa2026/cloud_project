@@ -38,7 +38,7 @@ function HomePage() {
             const reader = new FileReader();
             reader.onload = async () => {
                 const base64Image = reader.result.split(',')[1];  // Extract Base64 string
-                const response = await axios.post('https://0gh1gn6av0.execute-api.us-east-1.amazonaws.com/dev/uploadimage', {
+                const response = await axios.post('https://uv80mfxwh3.execute-api.us-east-1.amazonaws.com/dev/uploadimage', {
                     email: email,
                     profileImage: base64Image,  // Base64 string of the uploaded image
                 });
