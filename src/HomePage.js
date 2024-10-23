@@ -7,7 +7,9 @@ function HomePage() {
     const navigate = useNavigate();  // Hook to navigate between pages
     const email = location.state?.email || '';  // Retrieve the email passed from LoginForm
     const initialProfileImageUrl = location.state?.profileImageUrl || '';  // Retrieve the profile image URL if available
-    const [profileImageUrl, setProfileImageUrl] = useState(initialProfileImageUrl);  // State to handle profile image
+
+    // Cache-busting: Add a timestamp to the initial image URL to force a fresh load
+    const [profileImageUrl, setProfileImageUrl] = useState(initialProfileImageUrl ? `${initialProfileImageUrl}?t=${new Date().getTime()}` : '');  
     const [file, setFile] = useState(null);  // State to store the selected file
 
     // Function to handle file input change
@@ -17,7 +19,8 @@ function HomePage() {
             setFile(selectedFile);  // Store the selected file
             const reader = new FileReader();
             reader.onload = () => {
-                setProfileImageUrl(reader.result);  // Update profile image to the uploaded file
+                // Cache-busting: Add a timestamp to the uploaded file URL to avoid caching
+                setProfileImageUrl(`${reader.result}?t=${new Date().getTime()}`);
             };
             reader.readAsDataURL(selectedFile);  // Convert file to a Base64 string
         }
@@ -43,7 +46,7 @@ function HomePage() {
                     profileImage: base64Image,  // Base64 string of the uploaded image
                 });
                 console.log('Upload Success:', response.data);
-                // Force reload the image with a cache-busting parameter
+                // Cache-busting: Force reload the image with a new timestamp
                 setProfileImageUrl(`${profileImageUrl}?t=${new Date().getTime()}`);
             };     
             reader.readAsDataURL(file);  // Convert file to a Base64 string
