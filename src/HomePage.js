@@ -43,7 +43,9 @@ function HomePage() {
                     profileImage: base64Image,  // Base64 string of the uploaded image
                 });
                 console.log('Upload Success:', response.data);
-            };
+                // Force reload the image with a cache-busting parameter
+                setProfileImageUrl(`${profileImageUrl}?t=${new Date().getTime()}`);
+            };     
             reader.readAsDataURL(file);  // Convert file to a Base64 string
         } catch (error) {
             console.error('Upload Error:', error);
